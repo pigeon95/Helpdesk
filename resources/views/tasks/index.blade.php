@@ -73,8 +73,8 @@
                     Sortowanie:
                 </div>
                 <div class="col-md-10">
-                    <a href="{{ route('tasks.index', ['status' => request('status'), 'sort' => 'asc']) }}">Rosnąco</a> |
-                    <a href="{{ route('tasks.index', ['status' => request('status'), 'sort' => 'desc']) }}">Malejąco</a>
+                    <a href="{{ route('tasks.index', ['status' => request('status'), 'sort' => 'desc']) }}">Od najnowszych</a> |
+                    <a href="{{ route('tasks.index', ['status' => request('status'), 'sort' => 'asc']) }}">Od najstarszych</a>
                 </div>
             </div>
 

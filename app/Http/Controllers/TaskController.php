@@ -35,7 +35,7 @@ class TaskController extends Controller
 
         $queries = [];
 
-        $columns = ['status', 'search'];
+        $columns = ['status'];
 
         foreach ($columns as $column)
         {
@@ -47,12 +47,14 @@ class TaskController extends Controller
         }
 
         if ($request->has('sort')) {
-            $tasks = $tasks->orderBy('id', request('sort'));
+            $tasks = $tasks->orderBy('created_at', request('sort'));
+            $queries['sort'] = request('sort');
         }
 
         if ($request->has('search'))
         {
             $tasks = Task::search()->orderBy('title', request('search'));
+            $queries['search'] = request('search');
         }
 
         $tasks = $tasks->paginate(5)->appends($queries);
