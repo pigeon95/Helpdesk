@@ -2,8 +2,19 @@
 
 @section('content')
     <div class="jumbotron">
-        <h1 class="display-4">Helpdesk</h1>
-        <p class="lead">Aplikacja, służąca do zgłaszania zadań dla działu IT.</p>
+
+        <div class="row">
+            <div class="col-md-5">
+                <img src="{{ asset('images/logo.png') }}" width="400" height="400"/>
+            </div>
+
+            <div class="col-md-7">
+                <h1 class="display-4">Helpdesk</h1>
+                <p class="lead">Aplikacja, służąca do zgłaszania zadań dla działu IT.</p>
+            </div>
+
+        </div>
+
         @if( !Auth::user())
         <hr class="my-4">
 

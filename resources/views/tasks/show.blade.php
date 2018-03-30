@@ -36,12 +36,14 @@
                             <dd class="col-md-6">Do zrobienia</dd>
                         @endif
                     </dl>
-                    @if( Auth::user()->hasrole('receiving') )
+                    @if(Auth::user()->hasrole('receiving') || (Auth::user()->hasrole('declarant') && $task->user == Auth::user()))
                     <hr class="my-4">
                     <div class="row">
+                        @if( Auth::user()->hasrole('receiving'))
                         <div class="col-sm-6">
                             {!! Html::linkRoute('tasks.edit', 'Edytuj', array($task->id), array('class' => 'btn btn-primary btn-block')) !!}
                         </div>
+                        @endif
                         <div class="col-sm-6">
                             {!! Form::open(['route' => ['tasks.destroy', $task->id], 'method' => 'DELETE']) !!}
 
@@ -61,8 +63,8 @@
                 <div class="comment">
                     <div class="card">
                         <div class="card-body">
-                            {{ $comment->comment }}
-                            <footer class="blockquote-footer"><cite title="Source Title">Obsługa Helpdesk</cite></footer>
+                            {!!$comment->comment !!}
+                            <footer class="blockquote-footer"><cite title="Source Title">{{ $comment->user->name }}</cite></footer>
                         </div>
                     </div>
                     <br>

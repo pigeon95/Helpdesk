@@ -49,9 +49,11 @@ class CommentsController extends Controller
         ));
 
         $task = Task::find($task_id);
+        $id = \Auth::user()->id;
 
         $comment = new Comment();
         $comment->comment = $request->comment;
+        $comment->user_id = $id;
         $comment->task()->associate($task);
 
         $comment->save();

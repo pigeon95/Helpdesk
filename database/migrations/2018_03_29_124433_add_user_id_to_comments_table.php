@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddUserIdToTasks extends Migration
+class AddUserIdToCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class AddUserIdToTasks extends Migration
      */
     public function up()
     {
-        Schema::table('tasks', function($table) {
-            $table->integer('user_id')->after('file_path')->unsigned();
+        Schema::table('comments', function (Blueprint $table) {
+            $table->integer('user_id')->after('task_id')->unsigned();
         });
-
     }
 
     /**
@@ -26,7 +25,7 @@ class AddUserIdToTasks extends Migration
      */
     public function down()
     {
-        Schema::table('tasks', function($table) {
+        Schema::table('comments', function (Blueprint $table) {
             $table->integer('user_id');
         });
     }

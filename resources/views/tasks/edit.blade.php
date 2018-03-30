@@ -4,6 +4,14 @@
 
 @section('stylesheets')
     {!! Html::style('css/parsley.css') !!}
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'link',
+            menubar: false
+        });
+    </script>
 @endsection
 
 @section('content')
@@ -62,7 +70,7 @@
                 {{ Form::open(['route' => ['comments.store', $task->id], 'method' => 'POST']) }}
 
                 {{ Form::label('comment', "Komentarz:") }}
-                {{ Form::textarea('comment', null, ['class' => 'form-control', 'rows' => "3", 'required' => '']) }}
+                {{ Form::textarea('comment', null, ['class' => 'form-control', 'rows' => "3"]) }}
                 <br>
                 {{ Form::submit('Dodaj Komentarz', ['class' => 'btn btn-success']) }}
 
@@ -75,8 +83,8 @@
                 <div class="comment">
                     <div class="card">
                         <div class="card-body">
-                            {{ $comment->comment }}
-                            <footer class="blockquote-footer"><cite title="Source Title">Obsługa Helpdesk</cite></footer>
+                            {!!$comment->comment !!}
+                            <footer class="blockquote-footer"><cite title="Source Title">{{ $comment->user->name }}</cite></footer>
                         </div>
                     </div>
                     <br>

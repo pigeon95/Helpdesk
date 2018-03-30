@@ -40,6 +40,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Task');
     }
 
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
+
     /**
      * @param string|array $roles
      */
@@ -47,10 +52,10 @@ class User extends Authenticatable
     {
         if (is_array($roles)) {
             return $this->hasAnyRole($roles) ||
-                abort(401, 'Ta czynność wymaga dodatkowej autoryzacji.');
+                abort(401, 'Nie masz uprawnień do przeglądania tej sekcji :(');
         }
         return $this->hasRole($roles) ||
-            abort(401, 'Ta czynność wymaga dodatkowej autoryzacji.');
+            abort(401, 'Nie masz uprawnień do przeglądania tej sekcji :(');
     }
     /**
      * Check multiple roles

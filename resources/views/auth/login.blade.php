@@ -14,7 +14,6 @@
                 <div class="card-body">
                     <h5 class="card-title">Logowanie</h5>
                     <hr class="my-4">
-
                     {!! Form::open() !!}
 
                     {{ Form::label('emal', 'Email:') }}

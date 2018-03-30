@@ -26,14 +26,36 @@ class TaskController extends Controller
     {
         $id = \Auth::user()->id;
 
+        $tasks = new Task();
+
         if(auth()->user()->hasRole('declarant'))
         {
-            $tasks = Task::where('user_id', $id)->orderBy('updated_at', 'desc')->paginate(10);
+            $tasks = $tasks->where('user_id', $id);
         }
-        else
+
+        $queries = [];
+
+        $columns = ['status', 'search'];
+
+        foreach ($columns as $column)
         {
-            $tasks = Task::orderBy('updated_at', 'desc')->paginate(10);
+            if(request()->has($column))
+            {
+                $tasks = $tasks->where($column, request($column));
+                $queries[$column] = request($column);
+            }
         }
+
+        if ($request->has('sort')) {
+            $tasks = $tasks->orderBy('id', request('sort'));
+        }
+
+        if ($request->has('search'))
+        {
+            $tasks = Task::search()->orderBy('title', request('search'));
+        }
+
+        $tasks = $tasks->paginate(5)->appends($queries);
 
         return view('tasks.index')->withTasks($tasks);
     }
@@ -94,9 +116,17 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
+        $user_id = \Auth::user()->id;
+
         $task = Task::find($id);
+
+        if(auth()->user()->hasRole('declarant') && $user_id != $task->user_id)
+        {
+            $request->user()->authorizeRoles(['receiving']);
+        }
+
         return view('tasks.show')->withTask($task);
     }
 
@@ -149,9 +179,14 @@ class TaskController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        $request->user()->authorizeRoles(['receiving']);
+        $user_id = \Auth::user()->id;
 
         $task = Task::find($id);
+
+        if(auth()->user()->hasRole('declarant') && $user_id != $task->user_id)
+        {
+            $request->user()->authorizeRoles(['receiving']);
+        }
 
         $task->delete();
 

@@ -55,7 +55,6 @@
                         @endif
                         <td>
                             <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-info btn-sm">Szczegóły</a>
-
                             @if( Auth::user()->hasrole('receiving') )
                             <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-primary btn-sm">Edytuj</a>
                             @endif
@@ -68,7 +67,45 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-2">
+                    Sortowanie:
+                </div>
+                <div class="col-md-10">
+                    <a href="{{ route('tasks.index', ['status' => request('status'), 'sort' => 'asc']) }}">Rosnąco</a> |
+                    <a href="{{ route('tasks.index', ['status' => request('status'), 'sort' => 'desc']) }}">Malejąco</a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    Status:
+                </div>
+                <div class="col-md-10">
+                    <a href="/tasks?status=1">Zrobione</a> |
+                    <a href="/tasks?status=0">Do zrobienia</a> |
+                    <a href="/tasks">Wszystkie</a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            {!! Form::open(['method'=>'GET','url'=>'tasks','class'=>'navbar-form navbar-left','role'=>'search'])  !!}
+
+            <div class="input-group custom-search-form">
+                <input type="text" class="form-control" name="search" placeholder="Wyszukaj...">
+                <span class="input-group-btn">
+                        <button class="btn btn-success-sm" type="submit">
+                            Szukaj
+                        </button>
+                </span>
+            </div>
+            {!! Form::close() !!}
+        </div>
+
+        <div class="col-md-3">
             <div class="float-right">
                 {!! $tasks->links(); !!}
             </div>
