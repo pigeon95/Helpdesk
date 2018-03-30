@@ -93,6 +93,7 @@
                     {{ Form::submit('Usuń komentarz', ['class' => 'btn btn-danger']) }}
 
                     {!! Form::close() !!}
+                    <br>
                 </div>
             @endforeach
         </div>
